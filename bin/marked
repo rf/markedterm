@@ -77,6 +77,9 @@ var main = function(argv) {
       case '-h':
       case '--help':
         return help();
+      case '--terminal':
+        options.terminal = true;
+        break;
       default:
         files.push(arg);
         break;
