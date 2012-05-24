@@ -1,3 +1,10 @@
+# markedterm
+
+This is my fork of chjj's marked.  It supports rendering markdown in terminals.
+My additions are MIT as well.  The original readme is below.
+
+-----------------
+
 # marked
 
 A full-featured markdown parser and compiler, written in javascript.
