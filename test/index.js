@@ -184,7 +184,6 @@ if (!module.parent) {
     time();
   } else {
     main();
-    require('test-term').test();
   }
 } else {
   main.main = main;

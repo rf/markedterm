@@ -1,0 +1,126 @@
+
+   [4m[34m[1mmarkedterm[22m[39m[24m
+
+      This is my fork of chjj's marked. It supports rendering markdown in
+      terminals. My additions are MIT as well. The original readme is below.
+
+   ⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽
+
+   [4m[34m[1mmarked[22m[39m[24m
+
+      A full-featured markdown parser and compiler, written in javascript.
+      Built for speed.
+
+   [4m[1mBenchmarks[22m[24m
+
+      node v0.4.x
+
+[90m         [90m$ node test --bench[39m[39m
+[90m         [90mmarked completed in 12071ms.[39m[39m
+[90m         [90mshowdown (reuse converter) completed in 27387ms.[39m[39m
+[90m         [90mshowdown (new converter) completed in 75617ms.[39m[39m
+[90m         [90mmarkdown-js completed in 70069ms.[39m[39m
+
+      node v0.6.x
+
+[90m         [90m$ node test --bench[39m[39m
+[90m         [90mmarked completed in 6448ms.[39m[39m
+[90m         [90mmarked (gfm) completed in 7357ms.[39m[39m
+[90m         [90mmarked (pedantic) completed in 6092ms.[39m[39m
+[90m         [90mdiscount completed in 7314ms.[39m[39m
+[90m         [90mshowdown (reuse converter) completed in 16018ms.[39m[39m
+[90m         [90mshowdown (new converter) completed in 18234ms.[39m[39m
+[90m         [90mmarkdown-js completed in 24270ms.[39m[39m
+
+      [1mMarked is now faster than Discount, which is written in C.[22m
+
+      For those feeling skeptical: These benchmarks run the entire markdown
+      test suite 1000 times. The test suite tests every feature. It doesn't
+      cater to specific aspects.
+
+   [4m[1mInstall[22m[24m
+
+[90m         [90m$ npm install marked[39m[39m
+
+   [4m[1mAnother Javascript Markdown Parser[22m[24m
+
+      The point of marked was to create a markdown compiler where it was
+      possible to frequently parse huge chunks of markdown without having
+      to worry about caching the compiled output somehow...or blocking for
+      an unnecesarily long time.
+
+      marked is very concise and still implements all markdown features. It
+      is also now fully compatible with the client-side.
+
+      marked more or less passes the official markdown test suite in its
+      entirety. This is important because a surprising number of markdown
+      compilers cannot pass more than a few tests. It was very difficult to
+      get marked as compliant as it is. It could have cut corners in
+      several areas for the sake of performance, but did not in order to be
+      exactly what you expect in terms of a markdown rendering. In fact,
+      this is why marked could be considered at a disadvantage in the
+      benchmarks above.
+
+      Along with implementing every markdown feature, marked also
+      implements [4mGFM features[24m
+      (http://github.github.com/github-flavored-markdown/).
+
+   [4m[1mOptions[22m[24m
+
+      marked has 4 different switches which change behavior.
+
+       * [1mpedantic[22m: Conform to obscure parts of
+         [90mmarkdown.pl[39m as much as possible. Don't fix any of the
+         original markdown bugs or poor behavior.
+       * [1mgfm[22m: Enable github flavored markdown (enabled by default).
+       * [1msanitize[22m: Sanitize the output. Ignore any HTML that has
+         been input.
+       * [1mhighlight[22m: A callback to highlight code blocks.
+
+
+      None of the above are mutually exclusive/inclusive.
+
+   [4m[1mUsage[22m[24m
+
+[90m         [90m// Set default options[39m[39m
+[90m         [90mmarked.setOptions({[39m[39m
+[90m         [90m  gfm: true,[39m[39m
+[90m         [90m  pedantic: false,[39m[39m
+[90m         [90m  sanitize: true,[39m[39m
+[90m         [90m  // callback for code highlighter[39m[39m
+[90m         [90m  highlight: function(code, lang) {[39m[39m
+[90m         [90m    if (lang === 'js') {[39m[39m
+[90m         [90m      return javascriptHighlighter(code);[39m[39m
+[90m         [90m    }[39m[39m
+[90m         [90m    return code;[39m[39m
+[90m         [90m  }[39m[39m
+[90m         [90m});[39m[39m
+[90m         [90mconsole.log(marked('i am using __markdown__.'));[39m[39m
+
+      You also have direct access to the lexer and parser if you so desire.
+
+[90m         [90mvar tokens = marked.lexer(text);[39m[39m
+[90m         [90mconsole.log(marked.parser(tokens));[39m[39m
+
+[90m         [90m$ node[39m[39m
+[90m         [90m> require('marked').lexer('> i am using marked.')[39m[39m
+[90m         [90m[ { type: 'blockquote_start' },[39m[39m
+[90m         [90m  { type: 'paragraph',[39m[39m
+[90m         [90m    text: 'i am using marked.' },[39m[39m
+[90m         [90m  { type: 'blockquote_end' },[39m[39m
+[90m         [90m  links: {} ][39m[39m
+
+   [4m[1mCLI[22m[24m
+
+[90m         [90m$ marked -o hello.html[39m[39m
+[90m         [90mhello world[39m[39m
+[90m         [90m^D[39m[39m
+[90m         [90m$ cat hello.html[39m[39m
+[90m         [90m<p>hello world</p>[39m[39m
+
+   [4m[1mLicense[22m[24m
+
+      Copyright (c) 2011-2012, Christopher Jeffrey. (MIT License)
+
+      See LICENSE for more info.
+
